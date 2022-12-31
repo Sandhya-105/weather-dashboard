@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v4.2.2
+* @link https://coreui.io
+* Copyright (c) 2022 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+<!-- Breadcrumb-->
+<html lang="en">
+
+<head>
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+  <meta name="author" content="Łukasz Holeczek">
+  <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+  <title>CoreUI Free Bootstrap Admin Template</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Vendors styles-->
+  <link rel="stylesheet" href="vendors/simplebar/css/simplebar.css">
+  <link rel="stylesheet" href="css/vendors/simplebar.css">
+  <!-- Main styles for this application-->
+  <link href="css/style.css" rel="stylesheet">
+  <!-- We use those styles to show code examples, you should remove them in your application.-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
+  <link href="css/examples.css" rel="stylesheet">
+  <!-- Global site tag (gtag.js) - Google Analytics-->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    // Shared ID
+    gtag('config', 'UA-118965717-3');
+    // Bootstrap ID
+    gtag('config', 'UA-118965717-5');
+  </script>
+  <link href="vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
+  <style>
+    .widget {
+      border-radius: 20px;
+      /* box-shadow: 0 0 8px 2px rgb(90, 90, 90);  5 parameters(x offset, y offset, blur intensity, blur spread, color) */
+    }
+
+    .amgraph {
+      border-radius: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--Sidebar-->
+  <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+    <div class="sidebar-brand d-none d-md-flex">
+      <div class=""></div>
+    </div>
+  </div>
+  <!--Main content-->
+  <div class="wrapper d-flex flex-column min-vh-100 bg-light">
+    <!--main content header section-->
+    <header class="header header-sticky mb-4 justify-content-start">
+      <input type="text" class='form-control' style="width:20%" placeholder="type location" id="location">
+      <button class="btn btn-outline-success ms-3" onclick="nomitaniv_api()">Search</button>
+      <!-- some bootstrap will work with margin start and end rather than left and right-->
+    </header>
+    <!--main content body section-->
+    <div class="body flex-grow-1 px-3">
+      <!--div container-->
+      <div class="container-lg">
+        <!--1st row-->
+        <div class="row">
+          <!--1st column 6 section for small screen / 3 section for large screen-->
+          <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4 text-white widget"
+              style="height: 150px; background: url(assets/img/wind.jpg); background-size: cover; background-position: center;">
+              <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="fs-4 fw-semibold"><span id="windspeed"></span> <span class="fs-6 fw-normal">kmh</span></div>
+                  <div>Wind Speed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 2nd col-->
+          <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4 text-white widget"
+              style="height:150px; background: url(assets/img/humidity.jpg); background-size: cover; background-position: center;">
+              <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="fs-4 fw-semibold"><span id ='humidity'></span> <span class="fs-6 fw-normal">%</span></div>
+                  <div>Humidity</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 3rd col-->
+          <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4 text-white widget"
+              style="height:150px; background:url(assets/img/rainfall.jpg); background-size:cover; background-position:center">
+              <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="fs-4 fw-semibold"><span id="precipitation"></span> <span class="fs-6 fw-normal">mm</span></div>
+                  <div>Precipitation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--2nd row-->
+        <div class="row">
+          <!--1st col-->
+          <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4 text-white widget"
+              style="height:150px; background: url(assets/img/temperature.jpg); background-size: cover; background-position: center;">
+              <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="fs-4 fw-semibold"><span id="temp"></span> <span class="fs-6 fw-normal">°C</span></div>
+                  <div>apparent_temperature</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--2nd col-->
+          <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4 text-white widget"
+              style="height:150px; background: url(assets/img/snowdepth.jpg); background-size: cover; background-position: center;">
+              <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="fs-4 fw-semibold"><span id="snow"></span> <span class="fs-6 fw-normal">cm</span></div>
+                  <div>SnowFall</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--3rd col-->
+          <div class="col-sm-6 col-lg-4">
+            <!-- to position a bg img we need 3 properties: url, size and position. -->
+            <div class="card mb-4 text-white widget"
+              style="height:150px; background:url('assets/img/visibility.jpg'); background-size: cover; background-position: center;">
+              <!-- use ; between properties-->
+              <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="fs-4 fw-semibold"><span id="visibility"></span> <span class="fs-6 fw-normal">km</span></div> <!-- space is considered but only 1 space-->
+                  <div>Visibility</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--3rd row-->
+        <div class="row">
+          <div class="card mb-4 amgraph">
+            <div class="card-body">
+              <!-- card body-->
+              <div>
+                <div>
+                  <!-- card title div-->
+                  <h4 class="card-title mb-0">Upcoming Hours</h4>
+                  <div class="small text-medium-emphasis">24 hours</div>
+                </div>
+                <!--<div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown"
+                    aria-expanded="false">
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Temperature</a></li>
+                    <li><a class="dropdown-item" href="#">Rain</a></li>
+                  </ul>
+                </div>
+              </div> -->
+                <div class="c-chart-wrapper" style="height:400px;margin-top:40px;">
+                  <!-- main chart area-->
+                  <div class="chart" id="main-chart" style="height:400px"></div>
+                  <!-- canvas only has height property for div we need style-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--container ends-->
+      </div>
+      <!--wrapper ends-->
+    </div>
+    <!--body ends -->
+
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+    <script src="vendors/simplebar/js/simplebar.min.js"></script>
+    <!-- Plugins and scripts required by this view-->
+    <script src="vendors/chart.js/js/chart.min.js"></script>
+    <script src="vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+    <script src="vendors/@coreui/utils/js/coreui-utils.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <script>
+      function json_response(url) {
+        return $.ajax(url, { method: 'get', cache: false, dataType: 'Json' })
+      }
+
+      // don't give location as js has predefined location object
+
+      weather_api(51.51823394285901, -0.11192918900087576);
+      weather_graph(51.51823394285901, -0.11192918900087576);
+
+      async function nomitaniv_api() {
+        var latlng = $('#location').val()
+        const url = `https://nominatim.openstreetmap.org/search?q=${latlng}&format=json&limit=1` // ${} used to give variable in the url
+        const response = await json_response(url)
+        //console.log(response)
+        // response will be stored where the function is called
+        //const weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`
+        //const weather_response = await json_response(weather_url)
+        //console.log(weather_response)
+        weather_api(response[0].lat, response[0].lon);
+        weather_graph(response[0].lat, response[0].lon);
+      }
+
+
+
+      async function weather_api(lat, lng) {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0'); // adding zeros before the number to make it 2 digit
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        //console.log(today);// function arguments don't need declaration
+        let weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&hourly=relativehumidity_2m,visibility&daily=snowfall_sum,precipitation_sum&timezone=UTC&start_date=${today}&end_date=${today}`
+        const weather_response = await json_response(weather_url)
+        //console.log(weather_response)
+        let temperature = weather_response.current_weather.temperature
+        let windspeed = weather_response.current_weather.windspeed
+        let snowfall = weather_response.daily.snowfall_sum
+        //let temp=[];
+        for (let i=0;i<weather_response.hourly.time.length;i++) {
+          //console.log(weather_response.hourly.time[i])
+          curr_date=new Date().toISOString().substring(0,14)+'00'; // isostring is utc, js is utc
+          if (weather_response.hourly.time[i] == curr_date) { // these are string
+            console.log(curr_date, weather_response.hourly.time[i]); // date cannot be compared but seconds can
+            var humidity = weather_response.hourly.relativehumidity_2m[i];
+            console.log(humidity);
+            var visibility = (weather_response.hourly.visibility[i])/1000; // the bracket is not considered * itself
+          }  
+        }
+        //console.log(temp)
+        let precipitation = weather_response.daily.precipitation_sum
+        $('#temp').text(temperature);
+        $('#windspeed').text(windspeed);
+        $('#snow').text(snowfall);
+        $('#humidity').text(humidity);
+        $('#visibility').text(visibility);
+        $('#precipitation').text(precipitation);
+      }
+
+
+      async function weather_graph(lat, lng) {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        let weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=temperature_2m,rain&timezone=UTC&start_date=${today}&end_date=${today}`
+        const graph_response = await json_response(weather_url)
+        var temp = [] // chart data empty array we need json object
+        for (let i = 0; i < graph_response.hourly.time.length; i++) { // we are adding data to our empty array
+          temp.push({ date: new Date(graph_response.hourly.time[i]), temperature: graph_response.hourly.temperature_2m[i], rainfall: graph_response.hourly.rain[i] })
+        }
+        // Date is a class hence 'Captial'
+        // Create chart instance
+        var chart = am4core.create("main-chart", am4charts.XYChart); // in amcharts we don't need to specify # or .
+        chart.data = temp;
+        //console.log(temp)
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        //chart.colors.step = 3;
+        // Create series
+        function createAxisAndSeries(field, name, symbol, color, opposite, bullet) {
+          var valueAxis = chart.yAxes.push(new am4charts.ValueAxis()); // y axis is a value axis
+          if (chart.yAxes.indexOf(valueAxis) != 0) {
+            valueAxis.syncWithAxis = chart.yAxes.getIndex(0);
+          }
+
+          var series = chart.series.push(new am4charts.LineSeries()); // we are creating series from chart. Series is an array
+          series.dataFields.valueY = field; // it denotes key. for dynamic values we are giving field has an variable.
+          series.dataFields.dateX = "date";
+          series.strokeWidth = 2;
+          series.yAxis = valueAxis;
+          series.name = name;
+          series.tooltipText = `{name}: [bold]{valueY} ${symbol}[/]`; // [/] denotes bold limit. to introduce a variable, use string literal ${} without quotes cuz you are not selecting anything and use `` becuz it works only with this
+          series.tensionX = 0.8;
+          series.showOnInit = true;
+          series.stroke = color;
+          series.tooltip.getFillFromObject = false;
+          series.tooltip.background.fill = color;
+
+          var interfaceColors = new am4core.InterfaceColorSet();
+
+          switch (bullet) {
+            case "triangle":
+              var bullet = series.bullets.push(new am4charts.Bullet());
+              bullet.width = 12;
+              bullet.height = 12;
+              bullet.horizontalCenter = "middle";
+              bullet.verticalCenter = "middle";
+
+              var triangle = bullet.createChild(am4core.Triangle);
+              triangle.stroke = interfaceColors.getFor("background");
+              triangle.strokeWidth = 2;
+              triangle.direction = "top";
+              triangle.width = 12;
+              triangle.height = 12;
+              break;
+            case "rectangle":
+              var bullet = series.bullets.push(new am4charts.Bullet());
+              bullet.width = 10;
+              bullet.height = 10;
+              bullet.horizontalCenter = "middle";
+              bullet.verticalCenter = "middle";
+
+              var rectangle = bullet.createChild(am4core.Rectangle);
+              rectangle.stroke = '#00A2E8';
+              rectangle.fill = '#00A2E8';
+              rectangle.strokeWidth = 2;
+              rectangle.width = 10;
+              rectangle.height = 10;
+              break;
+            default:
+              var bullet = series.bullets.push(new am4charts.CircleBullet());
+              bullet.circle.stroke = color;
+              bullet.circle.fill = color;
+              bullet.circle.strokeWidth = 2;
+              break;
+          }
+
+          valueAxis.renderer.line.strokeOpacity = 1;
+          valueAxis.renderer.line.strokeWidth = 2;
+          valueAxis.renderer.line.stroke = series.stroke;
+          valueAxis.renderer.labels.template.fill = series.stroke;
+          valueAxis.renderer.opposite = opposite;
+        }
+
+        createAxisAndSeries("temperature", "Temperature", "°C", "#ff675c", false, "circle");
+        createAxisAndSeries("rainfall", "Rainfall", "mm", "#00A2E8", true, "rectangle");
+
+        // Add legend
+        chart.legend = new am4charts.Legend();
+
+        // Add cursor
+        chart.cursor = new am4charts.XYCursor();
+      }
+
+    </script>
+
+</body>
+
+</html>
