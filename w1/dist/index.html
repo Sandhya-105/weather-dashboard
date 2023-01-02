@@ -18,21 +18,7 @@
   <meta name="author" content="Łukasz Holeczek">
   <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
   <title>CoreUI Free Bootstrap Admin Template</title>
-  <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
   <!-- Vendors styles-->
   <link rel="stylesheet" href="vendors/simplebar/css/simplebar.css">
@@ -66,24 +52,36 @@
     .amgraph {
       border-radius: 15px;
     }
+
+    .px-3 {
+      padding: 1rem;
+      /*border-radius: 15px;*/
+    }
   </style>
 </head>
 
 <body>
   <!--Sidebar-->
-  <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+  <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar"
+    style="background: url(assets/img/weather.jpg); background-size: cover; background-position: center;">
     <div class="sidebar-brand d-none d-md-flex">
-      <div class=""></div>
+      <input type="text" class='form-control' style="width:60%" placeholder="type location" id="location"
+        oninput="nomitaniv_api()">
+      <button class="btn ms-3 p-0" onclick="getLocation()"><img src="assets/icons/gps.png" height="30"></button>
+      <!--<button class="btn btn-outline-success ms-3 btn-sm" onclick="nomitaniv_api()">Search</button>-->
+      <!-- some bootstrap will work with margin start and end rather than left and right / btn-sm is a bootstrap class for size-->
+    </div>
+    <div class="d-flex flex-column align-items-center justify-content-end mb-5 h-100">
+      <!--h-100 gives the parent height to the child-->
+      <!--d-flex aligns everything in a row with flex-col we can align items in a column-->
+      <h1><span id="temp"></span><span>°C</span></h1>
+      <div id="wicon"></div>
+      <h3 id="wcode"></h3>
+      <h4 id="place"></h4>
     </div>
   </div>
   <!--Main content-->
   <div class="wrapper d-flex flex-column min-vh-100 bg-light">
-    <!--main content header section-->
-    <header class="header header-sticky mb-4 justify-content-start">
-      <input type="text" class='form-control' style="width:20%" placeholder="type location" id="location">
-      <button class="btn btn-outline-success ms-3" onclick="nomitaniv_api()">Search</button>
-      <!-- some bootstrap will work with margin start and end rather than left and right-->
-    </header>
     <!--main content body section-->
     <div class="body flex-grow-1 px-3">
       <!--div container-->
@@ -96,9 +94,11 @@
               style="height: 150px; background: url(assets/img/wind.jpg); background-size: cover; background-position: center;">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fs-4 fw-semibold"><span id="windspeed"></span> <span class="fs-6 fw-normal">kmh</span></div>
+                  <div class="fs-4 fw-semibold"><span id="windspeed"></span> <span class="fs-6 fw-normal">kmh</span>
+                  </div>
                   <div>Wind Speed</div>
                 </div>
+                <img src="assets/icons/weather-icons/wind.svg" width="90">
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@
               style="height:150px; background: url(assets/img/humidity.jpg); background-size: cover; background-position: center;">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fs-4 fw-semibold"><span id ='humidity'></span> <span class="fs-6 fw-normal">%</span></div>
+                  <div class="fs-4 fw-semibold"><span id='humidity'></span> <span class="fs-6 fw-normal">%</span></div>
                   <div>Humidity</div>
                 </div>
               </div>
@@ -120,7 +120,8 @@
               style="height:150px; background:url(assets/img/rainfall.jpg); background-size:cover; background-position:center">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fs-4 fw-semibold"><span id="precipitation"></span> <span class="fs-6 fw-normal">mm</span></div>
+                  <div class="fs-4 fw-semibold"><span id="precipitation"></span> <span class="fs-6 fw-normal">mm</span>
+                  </div>
                   <div>Precipitation</div>
                 </div>
               </div>
@@ -131,13 +132,13 @@
         <div class="row">
           <!--1st col-->
           <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4 text-white widget"
-              style="height:150px; background: url(assets/img/temperature.jpg); background-size: cover; background-position: center;">
+            <div class="card mb-4 text-white widget" style="height:150px; background: url(assets/img/dir.jpg); background-size: cover; background-position: center;">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fs-4 fw-semibold"><span id="temp"></span> <span class="fs-6 fw-normal">°C</span></div>
-                  <div>apparent_temperature</div>
+                  <div class="fs-4 fw-semibold"><span id="winddir"></span> <span class="fs-6 fw-normal"></span></div>
+                  <div>Wind Direction</div>
                 </div>
+                <img src="assets/icons/weather-icons/compass.svg" width="90" id="compass">
               </div>
             </div>
           </div>
@@ -150,6 +151,7 @@
                   <div class="fs-4 fw-semibold"><span id="snow"></span> <span class="fs-6 fw-normal">cm</span></div>
                   <div>SnowFall</div>
                 </div>
+                <img src="assets/icons/weather-icons/snow.svg" width="90">
               </div>
             </div>
           </div>
@@ -161,7 +163,8 @@
               <!-- use ; between properties-->
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fs-4 fw-semibold"><span id="visibility"></span> <span class="fs-6 fw-normal">km</span></div> <!-- space is considered but only 1 space-->
+                  <div class="fs-4 fw-semibold"><span id="visibility"></span> <span class="fs-6 fw-normal">km</span>
+                  </div> <!-- space is considered but only 1 space-->
                   <div>Visibility</div>
                 </div>
               </div>
@@ -177,7 +180,7 @@
                 <div>
                   <!-- card title div-->
                   <h4 class="card-title mb-0">Upcoming Hours</h4>
-                  <div class="small text-medium-emphasis">24 hours</div>
+                  <!--<div class="small text-medium-emphasis">24 hours</div>-->
                 </div>
                 <!--<div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" data-coreui-toggle="dropdown"
@@ -221,26 +224,55 @@
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
     <script>
+
+      // var x = document.getElementById("demo");
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            //console.log();
+            weather_api(position.coords.latitude, position.coords.longitude);
+            weather_graph(position.coords.latitude, position.coords.longitude);
+            reverse_api(position.coords.latitude, position.coords.longitude);
+            //$('#place').text();
+          });
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      }
+
+      getLocation();
+
+      async function reverse_api(lat, lng) {
+        let url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=16&addressdetails=1`
+        let response = await json_response(url)
+        //console.log(response)
+        $('#place').text(response.address.city)
+      }
+
       function json_response(url) {
         return $.ajax(url, { method: 'get', cache: false, dataType: 'Json' })
       }
 
-      // don't give location as js has predefined location object
+      // don't give location as variable js has predefined location object
 
-      weather_api(51.51823394285901, -0.11192918900087576);
-      weather_graph(51.51823394285901, -0.11192918900087576);
+
 
       async function nomitaniv_api() {
-        var latlng = $('#location').val()
-        const url = `https://nominatim.openstreetmap.org/search?q=${latlng}&format=json&limit=1` // ${} used to give variable in the url
-        const response = await json_response(url)
-        //console.log(response)
-        // response will be stored where the function is called
-        //const weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`
-        //const weather_response = await json_response(weather_url)
-        //console.log(weather_response)
-        weather_api(response[0].lat, response[0].lon);
-        weather_graph(response[0].lat, response[0].lon);
+        setTimeout( async function () {
+          var latlng = $('#location').val()
+          const url = `https://nominatim.openstreetmap.org/search?q=${latlng}&format=json&limit=1` // ${} used to give variable in the url
+          const response = await json_response(url)
+          //console.log(response)
+          // response will be stored where the function is called
+          //const weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`
+          //const weather_response = await json_response(weather_url)
+          //console.log(weather_response)
+          weather_api(response[0].lat, response[0].lon);
+          weather_graph(response[0].lat, response[0].lon);
+          //reverse_api(response[0].lat, response[0].lon);
+          $('#place').text(latlng);
+        }, 2000); // setTimeout is a function used to give delay to a function response. the 1st paramter is an inline function, the 2nd paramter is delay in millisecond.
+
       }
 
 
@@ -252,33 +284,101 @@
         let yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
         //console.log(today);// function arguments don't need declaration
-        let weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&hourly=relativehumidity_2m,visibility&daily=snowfall_sum,precipitation_sum&timezone=UTC&start_date=${today}&end_date=${today}`
+        let weather_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&hourly=relativehumidity_2m,visibility&daily=snowfall_sum,precipitation_sum,sunrise&timezone=UTC&start_date=${today}&end_date=${today}`
         const weather_response = await json_response(weather_url)
         //console.log(weather_response)
         let temperature = weather_response.current_weather.temperature
         let windspeed = weather_response.current_weather.windspeed
+        let windir = weather_response.current_weather.winddirection
         let snowfall = weather_response.daily.snowfall_sum
+        let wcode = weather_response.current_weather.weathercode
         //let temp=[];
-        for (let i=0;i<weather_response.hourly.time.length;i++) {
+        for (let i = 0; i < weather_response.hourly.time.length; i++) {
           //console.log(weather_response.hourly.time[i])
-          curr_date=new Date().toISOString().substring(0,14)+'00'; // isostring is utc, js is utc
+          curr_date = new Date().toISOString().substring(0, 14) + '00'; // isostring is utc, js is utc
           if (weather_response.hourly.time[i] == curr_date) { // these are string
-            console.log(curr_date, weather_response.hourly.time[i]); // date cannot be compared but seconds can
+            //console.log(curr_date, weather_response.hourly.time[i]); // date cannot be compared but seconds can
             var humidity = weather_response.hourly.relativehumidity_2m[i];
-            console.log(humidity);
-            var visibility = (weather_response.hourly.visibility[i])/1000; // the bracket is not considered * itself
-          }  
+            //console.log(humidity);
+            var visibility = (weather_response.hourly.visibility[i]) / 1000; // the bracket is not considered * itself
+          }
         }
         //console.log(temp)
         let precipitation = weather_response.daily.precipitation_sum
         $('#temp').text(temperature);
         $('#windspeed').text(windspeed);
+        $('#winddir').text(windir);
+        $('#compass').css('transform',`rotate(${windir}deg)`) // .css is a jquery styling property , 2 parameters: transform and how much it rotates
         $('#snow').text(snowfall);
         $('#humidity').text(humidity);
         $('#visibility').text(visibility);
         $('#precipitation').text(precipitation);
+        let wstate ={
+          0:'Clear Sky',
+          1:'Mainly Clear',
+          2:'Partly Cloudy',
+          3:'Overcast',
+          45:'Foggy',
+          48:'Rime Fog',
+          51:'Light Drizzle',
+          53:'Moderate Drizzle',
+          55:'Intense Drizzle',
+          56:'Light Freezing Drizzle',
+          57:'Intense Freezing Drizzle',
+          61:'Slight Rainfall',
+          63:'Moderate Rainfall',
+          65:'Intense Rainfall',
+          66:'Light Freezing Rainfall',
+          67:'Intense Freezing Rainfall',
+          71:'Light Snowfall',
+          73:'Moderate Snowfall',
+          75:'Intense Snowfall',
+          77:'Snow Grain',
+          80:'Slight Showers',
+          81:'Moderate Showers',
+          82:'Violent Showers',
+          85:'Slight Snow Showers',
+          86:'Intense Snow Showers',
+          95:'Moderate Thunderstorm',
+          96:'Thunderstorm with Slight Hail',
+          99:'Thunderstorm with Heavy Hail'
+        };
+        let wicon = {
+          0:'clear-sky.svg',
+          1:'clear-sky.svg',
+          2:'partly-cloudy-day.svg',
+          3:'overcast.svg',
+          45:'fog.svg',
+          48:'fog.svg',
+          51:'partly-cloudy-day-drizzle.svg',
+          53:'drizzle.svg',
+          55:'drizzle.svg',
+          56:'drizzle.svg',
+          57:'drizzle.svg',
+          61:'partly-cloudy-day-rain.svg',
+          63:'rainfall.svg',
+          65:'rainfall.svg',
+          66:'rainfall.svg',
+          67:'rainfall.svg',
+          71:'snow.svg',
+          73:'snow.svg',
+          75:'snow.svg',
+          77:'snowflake.svg',
+          80:'partly-cloudy-day-rain',
+          81:'partly-cloudy-day-rain',
+          82:'rainfall.svg',
+          85:'partly-cloudy-day-sleet.svg',
+          86:'sleet.svg',
+          95:'thunderstorms.svg',
+          96:'thunderstorms-hail.svg',
+          99:'thunderstorms-hail.svg'
+        };
+        //console.log(wstate);
+        $('#wcode').text(wstate[wcode]);
+        $('#wicon').html(`<img src='assets/icons/weather-icons/${wicon[wcode]}' width='80'>`) // using dict instead of if-else saves time. the index number matches with the wcode gives the value
       }
 
+      var chart;
 
       async function weather_graph(lat, lng) {
         let today = new Date();
@@ -294,14 +394,15 @@
         }
         // Date is a class hence 'Captial'
         // Create chart instance
-        var chart = am4core.create("main-chart", am4charts.XYChart); // in amcharts we don't need to specify # or .
+        if (chart != undefined) chart.dispose(); // undefined is a datatype that states that there is no chart previously created
+        chart = am4core.create("main-chart", am4charts.XYChart); // in amcharts we don't need to specify # or .
         chart.data = temp;
         //console.log(temp)
         // Create axes
         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         //chart.colors.step = 3;
         // Create series
-        function createAxisAndSeries(field, name, symbol, color, opposite, bullet) {
+        function createAxisAndSeries(field, name, symbol, color, opposite) {
           var valueAxis = chart.yAxes.push(new am4charts.ValueAxis()); // y axis is a value axis
           if (chart.yAxes.indexOf(valueAxis) != 0) {
             valueAxis.syncWithAxis = chart.yAxes.getIndex(0);
@@ -322,7 +423,7 @@
 
           var interfaceColors = new am4core.InterfaceColorSet();
 
-          switch (bullet) {
+          /*switch (bullet) {
             case "triangle":
               var bullet = series.bullets.push(new am4charts.Bullet());
               bullet.width = 12;
@@ -357,7 +458,7 @@
               bullet.circle.fill = color;
               bullet.circle.strokeWidth = 2;
               break;
-          }
+          }*/
 
           valueAxis.renderer.line.strokeOpacity = 1;
           valueAxis.renderer.line.strokeWidth = 2;
@@ -366,8 +467,8 @@
           valueAxis.renderer.opposite = opposite;
         }
 
-        createAxisAndSeries("temperature", "Temperature", "°C", "#ff675c", false, "circle");
-        createAxisAndSeries("rainfall", "Rainfall", "mm", "#00A2E8", true, "rectangle");
+        createAxisAndSeries("temperature", "Temperature", "°C", "#ff675c", false);
+        createAxisAndSeries("rainfall", "Rainfall", "mm", "#00A2E8", true,);
 
         // Add legend
         chart.legend = new am4charts.Legend();
