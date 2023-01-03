@@ -90,8 +90,7 @@
         <div class="row">
           <!--1st column 6 section for small screen / 3 section for large screen-->
           <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4 text-white widget"
-              style="height: 150px; background: url(assets/img/wind.jpg); background-size: cover; background-position: center;">
+            <div class="card mb-4 text-white widget" style="height:120px; background-color:#598ba6">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
                   <div class="fs-4 fw-semibold"><span id="windspeed"></span> <span class="fs-6 fw-normal">kmh</span>
@@ -104,26 +103,26 @@
           </div>
           <!-- 2nd col-->
           <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4 text-white widget"
-              style="height:150px; background: url(assets/img/humidity.jpg); background-size: cover; background-position: center;">
+            <div class="card mb-4 text-white widget" style="height:120px; background-color:#598ba6">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
                   <div class="fs-4 fw-semibold"><span id='humidity'></span> <span class="fs-6 fw-normal">%</span></div>
                   <div>Humidity</div>
                 </div>
+                <img src="assets/icons/humidity.png" width="80">
               </div>
             </div>
           </div>
           <!-- 3rd col-->
           <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4 text-white widget"
-              style="height:150px; background:url(assets/img/rainfall.jpg); background-size:cover; background-position:center">
+            <div class="card mb-4 text-white widget" style="height:120px; background-color:#598ba6">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
                   <div class="fs-4 fw-semibold"><span id="precipitation"></span> <span class="fs-6 fw-normal">mm</span>
                   </div>
                   <div>Precipitation</div>
                 </div>
+                <img src="assets/icons/weather-icons/sleet.svg" width="90">
               </div>
             </div>
           </div>
@@ -132,7 +131,7 @@
         <div class="row">
           <!--1st col-->
           <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4 text-white widget" style="height:150px; background: url(assets/img/dir.jpg); background-size: cover; background-position: center;">
+            <div class="card mb-4 text-white widget" style="height:120px; background-color:#598ba6">
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
                   <div class="fs-4 fw-semibold"><span id="winddir"></span> <span class="fs-6 fw-normal"></span></div>
@@ -144,8 +143,7 @@
           </div>
           <!--2nd col-->
           <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4 text-white widget"
-              style="height:150px; background: url(assets/img/snowdepth.jpg); background-size: cover; background-position: center;">
+            <div class="card mb-4 text-white widget" style="height:120px; background-color:#598ba6"> <!--style="height:150px; background: url(assets/img/snowdepth.jpg); background-size: cover; background-position: center;"-->
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
                   <div class="fs-4 fw-semibold"><span id="snow"></span> <span class="fs-6 fw-normal">cm</span></div>
@@ -158,8 +156,7 @@
           <!--3rd col-->
           <div class="col-sm-6 col-lg-4">
             <!-- to position a bg img we need 3 properties: url, size and position. -->
-            <div class="card mb-4 text-white widget"
-              style="height:150px; background:url('assets/img/visibility.jpg'); background-size: cover; background-position: center;">
+            <div class="card mb-4 text-white widget" style="height:120px; background-color:#598ba6"> <!--style="height:150px; background:url('assets/img/visibility.jpg'); background-size: cover; background-position: center;"-->
               <!-- use ; between properties-->
               <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                 <div>
@@ -167,19 +164,20 @@
                   </div> <!-- space is considered but only 1 space-->
                   <div>Visibility</div>
                 </div>
+                <img src="assets/icons/eye.png" width="60">
               </div>
             </div>
           </div>
         </div>
         <!--3rd row-->
         <div class="row">
-          <div class="card mb-4 amgraph">
+          <div class="card mb-4 amgraph" style="background-color:#f3f7fe">
             <div class="card-body">
               <!-- card body-->
               <div>
                 <div>
                   <!-- card title div-->
-                  <h4 class="card-title mb-0">Upcoming Hours</h4>
+                  <h4 class="card-title mb-0">Today Weather</h4>
                   <!--<div class="small text-medium-emphasis">24 hours</div>-->
                 </div>
                 <!--<div class="dropdown">
@@ -402,7 +400,7 @@
         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         //chart.colors.step = 3;
         // Create series
-        function createAxisAndSeries(field, name, symbol, color, opposite) {
+        function createAxisAndSeries(field, name, symbol, color, opposite, intensity) {
           var valueAxis = chart.yAxes.push(new am4charts.ValueAxis()); // y axis is a value axis
           if (chart.yAxes.indexOf(valueAxis) != 0) {
             valueAxis.syncWithAxis = chart.yAxes.getIndex(0);
@@ -412,6 +410,8 @@
           series.dataFields.valueY = field; // it denotes key. for dynamic values we are giving field has an variable.
           series.dataFields.dateX = "date";
           series.strokeWidth = 2;
+          series.fillOpacity = intensity;
+          series.fill = color;
           series.yAxis = valueAxis;
           series.name = name;
           series.tooltipText = `{name}: [bold]{valueY} ${symbol}[/]`; // [/] denotes bold limit. to introduce a variable, use string literal ${} without quotes cuz you are not selecting anything and use `` becuz it works only with this
@@ -467,8 +467,8 @@
           valueAxis.renderer.opposite = opposite;
         }
 
-        createAxisAndSeries("temperature", "Temperature", "°C", "#ff675c", false);
-        createAxisAndSeries("rainfall", "Rainfall", "mm", "#00A2E8", true,);
+        createAxisAndSeries("temperature", "Temperature", "°C", "#ffcc00", false, 0.5);
+        createAxisAndSeries("rainfall", "Rainfall", "mm", "#00A2E8", true, 0.8);
 
         // Add legend
         chart.legend = new am4charts.Legend();
