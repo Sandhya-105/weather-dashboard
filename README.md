@@ -14,10 +14,6 @@ https://user-images.githubusercontent.com/94603960/210341310-9c6811aa-00c4-4382-
 
 ### Icon Attribution
 
-Free to use animated SVG weather icons from [Meteocons](https://bas.dev/work/meteocons).
-
-
-
-
-
-
++ Free to use animated SVG weather icons from [Meteocons](https://bas.dev/work/meteocons).
++ <a href="https://www.flaticon.com/free-icons/humidity" title="humidity icons">Humidity icons created by Freepik - Flaticon</a>
++ <a href="https://www.flaticon.com/free-icons/eye" title="eye icons">Eye icons created by berkahicon - Flaticon</a>
